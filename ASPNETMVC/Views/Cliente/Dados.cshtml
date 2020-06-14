@@ -1,0 +1,269 @@
+﻿@{
+    ViewData["Title"] = "Dados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+    <div class="kt-subheader-search ">
+        <div class="kt-container  kt-container--fluid ">
+            <h3 class="kt-subheader-search__title">
+                Dados do Cliente
+                <span class="kt-subheader-search__desc">Informa os dados do cliente selecionado</span>
+            </h3>
+        </div>
+    </div>
+
+    <!-- begin:: Content -->
+    <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+
+        <!--begin::Portlet-->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="kt-portlet">
+
+                    <!--begin::Form-->
+                    <form class="kt-form kt-form--label-right" id="form_cliente">
+                        <div class="kt-portlet__body">
+                            <div class="kt-form__content">
+                                <div class="kt-alert m-alert--icon alert alert-danger" hidden role="alert">
+                                    <div class="kt-alert__icon">
+                                        <i class="la la-warning"></i>
+                                    </div>
+                                    <div class="kt-alert__text">
+                                        Oops! Alguns dados são inválidos... Verifique e tente novamente.
+                                    </div>
+                                    <div class="kt-alert__close">
+                                        <button type="button" class="close" data-close="alert" aria-label="Close">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*---- DADOS GERAIS ----*@
+                            <h3 class="kt-section__title">
+                                Dados Gerais
+                            </h3>
+                            <br />
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">* Tipo:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <select class="form-control" id="tipo_pessoa" onchange="cliente.VerificaTipo()">
+                                        <option value="0">Físico</option>
+                                        <option value="1">Jurídico</option>
+                                        <option value="2">Simples</option>
+                                    </select>
+                                </div>
+                                <label class="col-1 col-form-label">Ativo</label>
+                                <div class="col-lg-4">
+                                    <div class="col-3">
+                                        <span class="kt-switch kt-switch--lg kt-switch--icon">
+                                            <label>
+                                                <input type="checkbox" checked name="ativo" id="ativo">
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" id="div_cnpj">
+                                <label class="col-form-label col-lg-3 col-sm-12">* CNPJ:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control cnpj" name="cnpj" id="cnpj">
+                                </div>
+                                @*<button class="btn btn-brand" type="button" onclick="OnClickConsultaCnpj(this)">Consultar</button>*@
+                            </div>
+
+                            <div class="form-group row" id="div_cpf">
+                                <label class="col-form-label col-lg-3 col-sm-12">* CPF:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control cpf" name="cpf" id="cpf">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">* Nome:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control" name="nome" id="nome">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">* Email:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control" name="email" id="email">
+                                </div>
+                            </div>
+
+                            <div class="form-group row" id="div_data_nascimento">
+                                <label class="col-form-label col-lg-3 col-sm-12">* Data de Nascimento:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control calendario" name="data_nascimento" id="data_nascimento">
+                                </div>
+                            </div>
+
+                            <div class="form-group row" id="div_razao_social">
+                                <label class="col-form-label col-lg-3 col-sm-12">* Razão Social:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control" name="razao_social" id="razao_social">
+                                </div>
+                            </div>
+
+                            <div class="form-group row" id="div_ie">
+                                <label class="col-form-label col-lg-3 col-sm-12">* Inscrição Estadual:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control" name="ie_numero" id="ie_numero">
+                                </div>
+                                <label class="col-1 col-form-label">Isento?</label>
+                                <div class="col-lg-4">
+                                    <div class="col-3">
+                                        <span class="kt-switch kt-switch--lg kt-switch--icon">
+                                            <label>
+                                                <input type="checkbox" name="ie_isento" id="ie_isento" onchange="cliente.OnChangeIeIsento()">
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" id="div_im">
+                                <label class="col-form-label col-lg-3 col-sm-12">* Inscrição Municipal:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control" name="im_numero" id="im_numero">
+                                </div>
+                                <label class="col-1 col-form-label">Isento?</label>
+                                <div class="col-lg-4">
+                                    <div class="col-3">
+                                        <span class="kt-switch kt-switch--lg kt-switch--icon">
+                                            <label>
+                                                <input type="checkbox" name="im_isento" id="im_isento" onchange="cliente.OnChangeImIsento()">
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">* Telefone:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control telefone" name="telefone_principal" id="telefone_principal">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">Telefone Secundário:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control telefone" name="telefone_secundario" id="telefone_secundario">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">Observações:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <textarea class="form-control" name="observacoes" id="observacoes"></textarea>
+                                </div>
+                            </div>
+
+                            @*---- ENDEREÇO ----*@
+                            <div class="kt-separator kt-separator--border-dashed kt-separator--space-xl"></div>
+                            <h3 class="kt-section__title">
+                                Endereço
+                            </h3>
+                            <br />
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">* CEP:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control cep" name="cep" id="cep">
+                                </div>
+                                @*<button class="btn btn-brand" type="button" onclick="OnClickConsultaCep(this)">Consultar</button>*@
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">* Endereço:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control" name="endereco" id="endereco">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">* Número:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control" name="numero" id="numero">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">Complemento:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control" name="complemento" id="complemento">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">* Bairro:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input type="text" class="form-control" name="bairro" id="bairro">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">* Cidade:</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <select name="combo_cidade" id="combo_cidade" class="form-control kt-select2"></select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="kt-portlet__foot">
+                            <div class="kt-form__actions kt-form__actions--right">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <button type="button" id="btn_salvar" onclick="cliente.Salvar()" class="btn btn-brand">Salvar</button>
+                                        <button type="button" class="btn btn-secondary" onclick="window.location.href = '@Url.Action("Listar", "Cliente")'">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/cliente.js"></script>
+<script src="~/js/util.js"></script>
+
+@section Scripts {
+
+    <script>
+
+        $(document).ready(function () {
+
+            iniciarCombos();
+            cliente.VerificaTipo();
+            cliente.Mascara();
+
+        });
+
+        function iniciarCombos() {
+
+            var cidade = {
+                url: '/Cidade/ListarCidadeParaCombo',
+                id: 'cidade_id',
+                combo: 'combo_cidade',
+                allowClear: true,
+            };
+
+            util.initCombo(cidade)
+        }
+
+    </script>
+}
+
