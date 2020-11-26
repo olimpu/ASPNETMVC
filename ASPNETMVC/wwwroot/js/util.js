@@ -1,5 +1,15 @@
 ﻿var util = {
 
+    showErrorMsg: function (form, type, msg) {
+
+        var alert = $('<div class="alert alert-' + type + ' alert-dismissible" role="alert"><div class="alert-text">' + msg + '</div><div class="alert-close"><i class="flaticon2-cross kt-icon-sm" data-dismiss="alert"></i></div>');
+        form.find('.alert').remove();
+        alert.prependTo(form);
+        //alert.animateClass('fadeIn animated');
+        KTUtil.animateClass(alert[0], 'fadeIn animated');
+        alert.find('span').html(msg);        
+    },
+
     initCombo: function (obj) {
 
         return $("#" + obj.combo).select2({
