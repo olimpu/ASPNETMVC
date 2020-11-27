@@ -16,17 +16,26 @@
         $("#registrar_senha").val("");
 
         $.ajax({
-            dataType: 'script',            
+            dataType: 'json',            
             url: baseUrl + 'Login/RegistrarUsuario',
             type: 'post',
             data: dados,
             success: function (res) {
 
-                btn.classList.remove('kt-spinner', 'kt-spinner--right', 'kt-spinner--sm', 'kt-spinner--light');
-                btn.disabled = false;
-                displaySignInForm();
-                var signInForm = $('#kt_login').find('.kt-login__signin');
-                util.showErrorMsg(signInForm, 'success', 'Sua conta tá criada! Agora é so digitar seu login e senha para acessar :D');                
+                if (res.processado) {
+
+                    btn.classList.remove('kt-spinner', 'kt-spinner--right', 'kt-spinner--sm', 'kt-spinner--light');
+                    btn.disabled = false;
+                    displaySignInForm();
+                    var signInForm = $('#kt_login').find('.kt-login__signin');
+                    util.showErrorMsg(signInForm, 'success', 'Sua conta tá criada! Agora é so digitar seu login e senha para acessar :D');
+                }
+                else {
+
+                    btn.classList.remove('kt-spinner', 'kt-spinner--right', 'kt-spinner--sm', 'kt-spinner--light');
+                    btn.disabled = false;
+                    util.showErrorMsg(signInForm, 'danger', res.mensagem);
+                }
             }
         });
     },
@@ -42,7 +51,7 @@
         };
 
         $.ajax({
-            dataType: 'script',
+            dataType: 'json',
             url: baseUrl + 'Login/AutenticarUsuario',
             type: 'post',
             data: dados,
@@ -51,10 +60,10 @@
                 btn.classList.remove('kt-spinner', 'kt-spinner--right', 'kt-spinner--sm', 'kt-spinner--light');
                 btn.disabled = false;
                 
-                if (res == 'false') {
+                if (!res.processado) {
 
                     var signInForm = $('#kt_login').find('.kt-login__signin');
-                    util.showErrorMsg(signInForm, 'danger', 'Email ou senha incorreta :(');
+                    util.showErrorMsg(signInForm, 'danger', res.mensagem);
                 }
                 else
                     document.location.href = "Home/Index";
