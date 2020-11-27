@@ -29,6 +29,10 @@ namespace ASPNETMVC.Controllers
                 if (usuario == null)
                     throw new Exception("Email ou senha incorreta :/");
 
+                usuario.UltimoLogin = DateTime.Now;
+                cntx.database.Usuarios.Attach(usuario);
+                cntx.database.SaveChanges();
+
                 return new JObject()
                 {
                     { "processado", true },
