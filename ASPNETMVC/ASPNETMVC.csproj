@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\banco\" />
     <Folder Include="wwwroot\tema\metronic6\" />
   </ItemGroup>
 
